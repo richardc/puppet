@@ -120,7 +120,12 @@ class Nagios::Base
       end
 
       define_method(method.to_s + "=") do |value|
-        @parameters[param] = value
+        if value == 'absent'
+          @parameters.delete(param)
+        else
+          @parameters[param] = value
+        end
+        value
       end
     end
 
