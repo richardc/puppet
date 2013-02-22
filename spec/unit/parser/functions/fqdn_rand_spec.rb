@@ -55,4 +55,12 @@ describe "the fqdn_rand function" do
     val2 = @scope.function_fqdn_rand([10000000,42])
     val1.should_not eql(val2)
   end
+
+  it "should not stomp over the intpreters random seed" do
+    @scope.function_fqdn_rand([10])
+    val1 = [ (1..10).collect { rand(10) } ]
+    @scope.function_fqdn_rand([10])
+    val2 = [ (1..10).collect { rand(10) } ]
+    val1.should_not eql(val2)
+  end
 end
